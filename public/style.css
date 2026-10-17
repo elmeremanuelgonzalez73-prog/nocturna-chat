@@ -35,7 +35,7 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   transition: background 0.4s ease, color 0.4s ease;
 }
 
@@ -75,6 +75,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px;
+  gap: 24px;
 }
 
 .join-card {
@@ -127,13 +128,6 @@ body {
   color: var(--text-dim);
   margin-bottom: 8px;
   font-weight: 500;
-}
-
-.field .hint {
-  text-transform: none;
-  letter-spacing: 0;
-  opacity: 0.7;
-  font-weight: 400;
 }
 
 .field input {
@@ -197,6 +191,14 @@ body.light .field input {
   transform: translateY(0);
 }
 
+.btn.small {
+  padding: 10px 16px;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
 .btn-glow {
   position: absolute;
   inset: 0;
@@ -249,6 +251,25 @@ body.light .field input {
   background: rgba(255, 92, 122, 0.15);
   border-color: var(--danger);
   color: var(--danger);
+}
+
+/* Sección personalizable abajo */
+.custom-section {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px 24px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+}
+
+.custom-text {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  text-align: center;
 }
 
 /* ========== CHAT ========== */
@@ -319,6 +340,32 @@ body.light .field input {
   border-radius: 20px;
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
+}
+
+/* Barra de renombrar (solo Robustcart) */
+.rename-bar {
+  display: flex;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass);
+}
+
+.rename-bar input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  outline: none;
+}
+
+.rename-bar input:focus {
+  border-color: var(--accent);
 }
 
 .messages {
@@ -465,7 +512,6 @@ body.light #message-input {
   transform: scale(0.96);
 }
 
-/* responsive */
 @media (max-width: 480px) {
   .join-card { padding: 28px 20px; }
   .msg { max-width: 92%; }

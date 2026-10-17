@@ -31,11 +31,6 @@
         <input type="text" id="room-id" placeholder="ej: 42 o secret123" maxlength="12" autocomplete="off" />
       </div>
 
-      <div class="field">
-        <label>nombre de la sala <span class="hint">(opcional, solo el primero lo define)</span></label>
-        <input type="text" id="room-name" placeholder="dejar vacío = se genera solo" maxlength="30" autocomplete="off" />
-      </div>
-
       <button id="join-btn" class="btn primary">
         <span>entrar</span>
         <div class="btn-glow"></div>
@@ -44,6 +39,14 @@
       <div class="join-footer">
         <button id="theme-toggle-join" class="icon-btn" title="Cambiar tema">☾</button>
         <span class="info">los mensajes desaparecen exactamente 24h después de enviarse</span>
+      </div>
+    </div>
+
+    <!-- Sección personalizable (abajo) -->
+    <div class="custom-section glass" id="custom-section">
+      <div class="custom-text" id="custom-text">
+        <!-- Aquí pondrás tu texto -->
+        Espacio reservado para tu texto personalizado.
       </div>
     </div>
   </div>
@@ -64,6 +67,12 @@
         <button id="leave-btn" class="icon-btn leave" title="Salir">✕</button>
       </div>
     </header>
+
+    <!-- Solo visible si eres Robustcart -->
+    <div id="rename-bar" class="rename-bar glass hidden">
+      <input type="text" id="new-room-name" placeholder="nuevo nombre de la sala..." maxlength="30" />
+      <button id="rename-btn" class="btn small">renombrar</button>
+    </div>
 
     <main id="messages" class="messages"></main>
 

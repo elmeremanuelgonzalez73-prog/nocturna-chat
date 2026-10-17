@@ -5,6 +5,7 @@ const joinScreen = $('#join-screen');
 const chatScreen = $('#chat-screen');
 const messagesEl = $('#messages');
 const messageInput = $('#message-input');
+const renameBar = $('#rename-bar');
 
 let currentUser = '';
 let currentRoom = '';
@@ -40,7 +41,6 @@ $('#join-btn').addEventListener('click', join);
 function join() {
   const username = $('#username').value.trim();
   const roomId = $('#room-id').value.trim();
-  const roomName = $('#room-name').value.trim();
 
   if (!username) {
     $('#username').focus();
@@ -54,7 +54,7 @@ function join() {
   currentUser = username;
   currentRoom = roomId;
 
-  socket.emit('join', { roomId, username, roomName: roomName || null });
+  socket.emit('join', { roomId, username });
 }
 
 socket.on('room-info', ({ roomId, roomName, messages }) => {
@@ -65,6 +65,13 @@ socket.on('room-info', ({ roomId, roomName, messages }) => {
   $('#display-room-id').textContent = `#${roomId}`;
   $('#display-room-name').textContent = roomName;
   $('#room-badge').textContent = roomId.slice(0, 3).toUpperCase();
+
+  // Solo Robustcart puede ver la barra de renombrar
+  if (currentUser === 'Robustcart') {
+    renameBar.classList.remove('hidden');
+  } else {
+    renameBar.classList.add('hidden');
+  }
 
   messagesEl.innerHTML = '';
   messages.forEach(m => appendMessage(m));
@@ -130,6 +137,23 @@ messageInput.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
     send();
+  }
+});
+
+// Rename (solo Robustcart)
+$('#rename-btn').addEventListener('click', () => {
+  const name = $('#new-room-name').value.trim();
+  if (!name) return;
+  socket.emit('set-room-name', name);
+  $('#new-room-name').value = '';
+});
+
+$('#new-room-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const name = $('#new-room-name').value.trim();
+    if (!name) return;
+    socket.emit('set-room-name', name);
+    $('#new-room-name').value = '';
   }
 });
 

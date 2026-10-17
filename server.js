@@ -27,7 +27,7 @@ setInterval(() => {
 }, 5 * 60 * 1000);
 
 io.on('connection', (socket) => {
-  socket.on('join', ({ roomId, username, roomName }) => {
+  socket.on('join', ({ roomId, username }) => {
     if (!roomId || !username) return;
 
     roomId = String(roomId).trim().slice(0, 12);
@@ -35,13 +35,10 @@ io.on('connection', (socket) => {
 
     if (!rooms.has(roomId)) {
       rooms.set(roomId, {
-        name: roomName ? String(roomName).trim().slice(0, 30) : `Sala ${roomId}`,
+        name: `Sala ${roomId}`,
         messages: [],
         createdAt: Date.now()
       });
-    } else if (roomName && rooms.get(roomId).name.startsWith('Sala ')) {
-      // First person who sets a custom name wins
-      rooms.get(roomId).name = String(roomName).trim().slice(0, 30);
     }
 
     socket.join(roomId);
@@ -76,14 +73,16 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.roomId);
     if (room) {
       room.messages.push(msg);
-      // Keep only last 200 messages per room to avoid memory issues
       if (room.messages.length > 200) room.messages.shift();
       io.to(socket.roomId).emit('message', msg);
     }
   });
 
+  // Solo el usuario llamado exactamente "Robustcart" puede cambiar el nombre
   socket.on('set-room-name', (name) => {
     if (!socket.roomId || !name) return;
+    if (socket.username !== 'Robustcart') return; // bloqueado
+
     const room = rooms.get(socket.roomId);
     if (room) {
       room.name = String(name).trim().slice(0, 30);
