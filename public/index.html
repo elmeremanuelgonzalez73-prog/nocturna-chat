@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nocturna</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+  <div class="noise"></div>
+  <div class="bg-glow"></div>
+
+  <!-- JOIN SCREEN -->
+  <div id="join-screen" class="screen">
+    <div class="join-card glass">
+      <div class="logo">
+        <span class="logo-mark">◈</span>
+        <h1>Nocturna</h1>
+      </div>
+      <p class="tagline">salas temporales · mensajes que se desvanecen</p>
+
+      <div class="field">
+        <label>tu nombre</label>
+        <input type="text" id="username" placeholder="cómo te llaman..." maxlength="20" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <label>número de sala</label>
+        <input type="text" id="room-id" placeholder="ej: 42 o secret123" maxlength="12" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <label>nombre de la sala <span class="hint">(opcional, solo el primero lo define)</span></label>
+        <input type="text" id="room-name" placeholder="dejar vacío = se genera solo" maxlength="30" autocomplete="off" />
+      </div>
+
+      <button id="join-btn" class="btn primary">
+        <span>entrar</span>
+        <div class="btn-glow"></div>
+      </button>
+
+      <div class="join-footer">
+        <button id="theme-toggle-join" class="icon-btn" title="Cambiar tema">☾</button>
+        <span class="info">los mensajes desaparecen exactamente 24h después de enviarse</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT SCREEN -->
+  <div id="chat-screen" class="screen hidden">
+    <header class="chat-header glass">
+      <div class="header-left">
+        <div class="room-badge" id="room-badge">—</div>
+        <div class="room-meta">
+          <span class="room-name" id="display-room-name">Sala</span>
+          <span class="room-id-small" id="display-room-id">#—</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="you" id="display-username">tú</span>
+        <button id="theme-toggle" class="icon-btn" title="Día / Noche">☾</button>
+        <button id="leave-btn" class="icon-btn leave" title="Salir">✕</button>
+      </div>
+    </header>
+
+    <main id="messages" class="messages"></main>
+
+    <footer class="input-bar glass">
+      <input type="text" id="message-input" placeholder="escribe algo que desaparecerá mañana..." maxlength="500" autocomplete="off" />
+      <button id="send-btn" class="btn send">
+        <span>↑</span>
+      </button>
+    </footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
